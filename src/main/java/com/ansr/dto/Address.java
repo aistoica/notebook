@@ -7,8 +7,8 @@ import org.springframework.data.annotation.Id;
  */
 public class Address {
 
-    @Id
-    private String id;
+/*    @Id
+    private String id;*/
 
     private String streetName;
     private Long streetNo;
@@ -26,40 +26,40 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public Long getStreetNo() {
-        return streetNo;
-    }
-
-    public void setStreetNo(Long streetNo) {
-        this.streetNo = streetNo;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getDistrict() {
         return district;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public Long getStreetNo() {
+        return streetNo;
     }
 
     public String getZipCode() {
         return zipCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public void setStreetNo(Long streetNo) {
+        this.streetNo = streetNo;
     }
 
     public void setZipCode(String zipCode) {
