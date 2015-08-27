@@ -21,7 +21,8 @@ public class User {
 	private String idNumber;
 	private String idPersonalCode;
 	private String nationality;
-	private MaritalStatus maritalStatus;
+	//private MaritalStatus maritalStatus;
+	private String maritalStatus;
 	private int noOfChildren;
 	private Contact contactInfo;
 	private Set<Payment> payments;
@@ -32,11 +33,16 @@ public class User {
 		payments = new HashSet<>();
 		disabilities = new HashSet<>();
 	}
+	
+	public User(String firstName, String lastName){
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
 	public User(String firstName, String lastName, Address currentAddress,
 			Address birthAddress, String idSeries, String idNumber,
-			String idPersonalCode, String nationality, MaritalStatus maritalStatus,
-			int noOfChildren, Contact contactInfo, Role role) {
+			String idPersonalCode, String nationality, String maritalStatus,
+			int noOfChildren, Contact contactInfo){ //, Role role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.currentAddress = currentAddress;
@@ -48,7 +54,7 @@ public class User {
 		this.maritalStatus = maritalStatus;
 		this.noOfChildren = noOfChildren;
 		this.contactInfo = contactInfo;
-		this.role = role;
+		//this.role = role;
 	}
 
 	public Address getBirthAddress() {
@@ -91,7 +97,7 @@ public class User {
 		return lastName;
 	}
 
-	public MaritalStatus getMaritalStatus() {
+	public String getMaritalStatus() {
 		return maritalStatus;
 	}
 
@@ -152,7 +158,7 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public void setMaritalStatus(MaritalStatus maritalStatus) {
+	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 

@@ -1,5 +1,5 @@
 angular
-		.module('hello', [ 'ngRoute', 'auth', 'home', 'message', 'navigation' ])
+		.module('hello', [ 'ngRoute', 'ngResource', 'users', 'auth', 'home', 'message', 'navigation' ])
 		.config(
 
 				function($routeProvider, $httpProvider, $locationProvider) {
@@ -12,6 +12,9 @@ angular
 					}).when('/message', {
 						templateUrl : 'js/message/message.html',
 						controller : 'message'
+					}).when('/users', {
+						templateUrl : 'js/users/users.html',
+						controller : 'users'
 					}).when('/login', {
 						templateUrl : 'js/navigation/login.html',
 						controller : 'navigation'
@@ -21,8 +24,8 @@ angular
 
 				}).run(function(auth) {
 
-			// Initialize auth module with the home page and login/logout path
-			// respectively
-			auth.init('/', '/login', '/logout');
+				// Initialize auth module with the home page and login/logout path
+				// respectively
+				auth.init('/', '/login', '/logout');
 
 		});

@@ -12,16 +12,18 @@ public class Address {
 
     private String streetName;
     private Long streetNo;
+    private String country;
     private String city;
     private String district;
     private String zipCode;
 
     public Address() {}
 
-    public Address(String streetName, Long streetNo, String city, String district, String zipCode) {
+    public Address(String streetName, Long streetNo, String city, String country, String district, String zipCode) {
         this.streetName = streetName;
         this.streetNo = streetNo;
         this.city = city;
+        this.country = country;
         this.district = district;
         this.zipCode = zipCode;
     }
@@ -76,4 +78,12 @@ public class Address {
                 ", zipCode='" + zipCode + '\'' +
                 '}';
     }
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 }

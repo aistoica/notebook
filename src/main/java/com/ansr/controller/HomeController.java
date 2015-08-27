@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 	
 	// Match everything without a suffix (so not a static resource)
+	// This will make pretty urls. We will get /login instead of /#/login
 	@RequestMapping(value = "/{[path:[^\\.]*}")
 	public String redirect() {
 		// Forward to home page so that route is preserved.

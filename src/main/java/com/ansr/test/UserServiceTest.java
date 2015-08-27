@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * Created by astoica on 8/7/2015.
  */
 @Component
-public class UserService {
+public class UserServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -22,9 +22,9 @@ public class UserService {
     public void print() {
 //        userRepository.deleteAll();
 
-        Address address = new Address("Maniu", 10L, "Buc", "S6", "000999");
+        Address address = new Address("Maniu", 10L, "Buc", "Ro", "S6", "000999");
         Contact contact = new Contact("0752231411", "0752231411", "test@gmail.com", "test@gmail.com");
-        userRepository.save(new User("John", "Doe", address, address, "AS", "574858", "2920607033444", "Romanian", MaritalStatus.NOTMARRIED, 0, contact,Role.USER));
+        userRepository.save(new User("John", "Doe", address, address, "AS", "574858", "2920607033444", "Romanian", MaritalStatus.NOTMARRIED.getValue(), 0, contact));//,Role.USER));
 
         for(User user : userRepository.findByFirstName("firstname")) {
             System.out.println(user);

@@ -48,7 +48,7 @@ public class Application implements CommandLineRunner{
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceTest userService;
 
     
     public static void main(String... args) {
