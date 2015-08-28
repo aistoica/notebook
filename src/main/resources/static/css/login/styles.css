@@ -1,0 +1,9 @@
+.modal-footer {
+    border-top: 0px !important
+}
+.login-dialog {
+    margin: 10% auto auto; !important
+}
+.sign-in-btn {
+    background-color: #005E5E; !important
+}
