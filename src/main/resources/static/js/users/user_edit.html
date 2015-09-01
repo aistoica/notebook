@@ -1,0 +1,95 @@
+	<form role="form">
+		<div class="form-group">
+			<label>Firstname</label>
+			<input type="text" name="firstname" ng-model="existinguser.firstName" class="form-control"/>
+		</div>
+
+		<div class="form-group">
+			<label>Lastname</label>
+			<input type="text" name="lastname" ng-model="existinguser.lastName" class="form-control"/>		
+		</div>
+
+		<div class="form-group">
+			<label>Current address</label>
+			<br/>
+			<label>Country</label>
+			<input type="text" name="country" ng-model="existinguser.currentAddress.country" class="form-control"/>
+			
+			<label>City</label>
+			<input type="text" name="city" ng-model="existinguser.currentAddress.city" class="form-control"/>
+			
+			<label>District</label>
+			<input type="text" name="district" ng-model="existinguser.currentAddress.district" class="form-control"/>
+			
+			<label>Street Name</label>
+			<input type="text" name="streetname" ng-model="existinguser.currentAddress.streetName" class="form-control"/>
+			
+			<label>Street Number</label>
+			<input type="text" name="streeno" ng-model="existinguser.currentAddress.streetNo" class="form-control"/>
+			
+			<label>Zip Code</label>
+			<input type="text" name="zipcode" ng-model="existinguser.currentAddress.zipCode" class="form-control"/>		
+			
+			<br/>
+			<label>Birth address</label>
+			<br/>
+			<label>Country</label>
+			<input type="text" name="country" ng-model="existinguser.birthAddress.country" class="form-control"/>
+			
+			<label>City</label>
+			<input type="text" name="city" ng-model="existinguser.birthAddress.city" class="form-control"/>
+			
+			<label>District</label>
+			<input type="text" name="district" ng-model="existinguser.birthAddress.district" class="form-control"/>
+			
+			<label>Street Name</label>
+			<input type="text" name="streetname" ng-model="existinguser.birthAddress.streetName" class="form-control"/>
+			
+			<label>Street Number</label>
+			<input type="text" name="streeno" ng-model="existinguser.birthAddress.streetNo" class="form-control"/>
+			
+			<label>Zip Code</label>
+			<input type="text" name="zipcode" ng-model="existinguser.birthAddress.zipCode" class="form-control"/>		
+			
+			<br/>
+			<label>Id Series</label>
+			<input type="text" name="idseries" ng-model="existinguser.idSeries" class="form-control"/>			
+			
+			<label>Id Number</label>
+			<input type="text" name="idno" ng-model="existinguser.idNumber" class="form-control"/>	
+			
+			<label>Personal Code</label>
+			<input type="text" name="personalcode" ng-model="existinguser.idPersonalCode" class="form-control"/>	
+			
+			<label>Nationality</label>
+			<input type="text" name="nationality" ng-model="existinguser.nationality" class="form-control"/>	
+			
+			<label>Marital status</label>
+			<select name="status" ng-model="existinguser.maritalStatus" ng-options="s for s in status">
+				<option value="">Select</option>
+			</select>		
+			
+			</br>
+			<label>Number of children</label>
+			<input type="text" name="children" ng-model="existinguser.noOfChildren" class="form-control"/>
+			
+			<br/>
+			<label>Contact</label>
+			<label>Telephone 1</label>
+			<input type="text" name="telephone1" ng-model="existinguser.contactInfo.telephone1" class="form-control"/>
+			
+			<label>Telephone 2</label>
+			<input type="text" name="telephone2" ng-model="existinguser.contactInfo.telephone2" class="form-control"/>
+						
+			<label>Email1</label>
+			<input type="text" name="email1" ng-model="existinguser.contactInfo.email1" class="form-control"/>			
+			
+			<label>Email2</label>
+			<input type="text" name="email2" ng-model="existinguser.contactInfo.email2" class="form-control"/>				
+						
+		</div>
+		
+		<div class="col-sm-2">
+			<button type="submit" class="btn btn-primary" ng-click="save()"> Save </button>
+		</div>
+	</form>	

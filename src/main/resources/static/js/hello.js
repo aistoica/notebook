@@ -15,6 +15,12 @@ angular
 					}).when('/users', {
 						templateUrl : 'js/users/users.html',
 						controller : 'users'
+					}).when('/users/new', {
+						templateUrl : 'js/users/user_add.html',
+						controller : 'users'
+					}).when('/users/edit/:userId', {
+						templateUrl : 'js/users/user_edit.html',
+						controller : 'users'
 					}).when('/login', {
 						templateUrl : 'js/navigation/login.html',
 						controller : 'navigation'

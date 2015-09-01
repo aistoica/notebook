@@ -42,7 +42,7 @@ import com.ansr.repository.UserRepository;
 @SpringBootApplication
 @EnableMongoRepositories(basePackages = "com.ansr.repository")
 @ComponentScan(basePackages = "com.ansr")
-public class Application implements CommandLineRunner{
+public class Application { // implements CommandLineRunner{
 
     @Autowired
     private UserRepository userRepository;
@@ -55,12 +55,12 @@ public class Application implements CommandLineRunner{
         SpringApplication.run(Application.class, args);
     }
 
-    @Override
+/*    @Override
     public void run(String... strings) throws Exception {
 
         userService.print();
 
         while(true);
-    }
+    }*/
     
 }
