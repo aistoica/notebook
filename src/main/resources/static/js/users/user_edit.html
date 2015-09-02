@@ -65,8 +65,11 @@
 			<input type="text" name="nationality" ng-model="existinguser.nationality" class="form-control"/>	
 			
 			<label>Marital status</label>
-			<select name="status" ng-model="existinguser.maritalStatus" ng-options="s for s in status">
+			<select name="status" ng-model="existinguser.maritalStatus">
 				<option value="">Select</option>
+				<option value="married"> Married</option>
+				<option value="not married">Not married</option>
+				<!-- <option ng-repeat="status in statusList" value="{{status}}">{{status}}</option> -->
 			</select>		
 			
 			</br>

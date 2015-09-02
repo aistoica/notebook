@@ -1,10 +1,17 @@
 <div>
 
-<div>
+
+<div class="page-header">
+	<h3>Users</h3>
+</div>
+
+<div class="row">
 	<button type="button" class="btn btn-default">
 		<a href="/users/new">NEW</a>
 	</button>
 </div>
+
+
 <table class="table table-condensed">
 	<tr>
 		<th style="display:none">Id</th>
@@ -12,7 +19,7 @@
 		</th>
 		<th>Lastname
 		</th>
-		<th>Actions
+		<th>
 		</th>
 	</tr>
 	<tr ng-repeat="user in users">
@@ -23,14 +30,18 @@
 		<td>{{user.lastName}}
 		</td>
 		<td>
-			<button type="button" class="btn btn-default btn-lg" >
-			   <a ng-href="/users/edit/{{user.id}}"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+			<button type="button" class="btn btn-default btn-lg">
+			    <a ng-href="/users/{{user.id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
 			</button>	
 			<button type="button" class="btn btn-default btn-lg">
-			  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-			</button>				
+			  <a href="" ng-click="deleteUser(user)"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+			</button>		
+			<button type="button" class="btn btn-default btn-lg">
+			  <a ng-href="/upload/{{user.id}}"> <span class="glyphicon glyphicon-upload" aria-hidden="true"></span></a>
+			</button>
 		</td>
 	</tr>
 </table>
+
 
 </div>

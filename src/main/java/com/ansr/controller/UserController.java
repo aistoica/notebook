@@ -1,20 +1,27 @@
 package com.ansr.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ansr.dto.MaritalStatus;
 import com.ansr.dto.User;
 import com.ansr.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.gridfs.GridFS;
 
 
 @Controller
@@ -24,6 +31,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	GridFsTemplate gridFsTemplate;
 	// Create a new user
 	//
 	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
@@ -49,7 +58,7 @@ public class UserController {
 		return stringStatus;
 	}
 	
-	@RequestMapping(value = "/users/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String getAllUsers() {
 		List<User> userList = userService.getAllUsers();
 		
@@ -65,7 +74,7 @@ public class UserController {
 		return jsonData;
 	}
 	
-	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)    
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)    
     public String getUsersById( @PathVariable("id") String userId )   {        
         User user = userService.getUser(userId);
 		
@@ -81,13 +90,44 @@ public class UserController {
 		return jsonData;
     }
 	
-	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.POST)    
-    public String updateUser( @PathVariable("id") String userId,  User user)   { 
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.POST)    
+    public String updateUser( @PathVariable("id") String userId, @RequestBody  User user)   { 
 		String response = "{\"message\":\"Edited: The user firstname: " + user.getFirstName()
 		+ ", lastname: " + user.getLastName() + "birth city" + user.getBirthAddress().getCity() + "\"}";
 		userService.saveUser(user);
 		return response;
 		
+	}
+	
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE) 
+	public void deleteUser(@PathVariable("id") String userId) {
+		this.userService.delete(userId);
+		
+	}
+	
+	@RequestMapping(value="/upload/{id}", method = RequestMethod.POST)
+	public String uploadFiles(@RequestParam("file") MultipartFile[] files) {
+    	String fileName = null;
+    	String msg = "";
+
+    	if (files != null && files.length >0) {
+    		for(int i =0 ;i< files.length; i++){
+	            try {
+	                fileName = files[i].getOriginalFilename();
+	                byte[] bytes = files[i].getBytes();
+	                BufferedOutputStream buffStream = 
+	                        new BufferedOutputStream(new FileOutputStream(new File("D:/cp/" + fileName)));
+	                buffStream.write(bytes);
+	                buffStream.close();
+	                msg += "You have successfully uploaded " + fileName +"<br/>";
+	            } catch (Exception e) {
+	                return "You failed to upload " + fileName + ": " + e.getMessage() +"<br/>";
+	            }
+    		}
+    		return msg;
+        } else {
+            return "Unable to upload. File is empty.";
+        }		
 	}
 	
 }

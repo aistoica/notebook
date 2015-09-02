@@ -1,9 +1,13 @@
 package com.ansr.dto;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Created by astoica on 8/7/2015.
@@ -188,5 +192,6 @@ public class User {
 				+ ", maritalStatus=" + maritalStatus + ", noOfChildren="
 				+ noOfChildren + ", contactInfo=" + contactInfo + "]";
 	}
+	
 
 }

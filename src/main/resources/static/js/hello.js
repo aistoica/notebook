@@ -17,10 +17,13 @@ angular
 						controller : 'users'
 					}).when('/users/new', {
 						templateUrl : 'js/users/user_add.html',
-						controller : 'users'
-					}).when('/users/edit/:userId', {
+						controller : 'usersAddCtrl'
+					}).when('/users/:id', {
 						templateUrl : 'js/users/user_edit.html',
-						controller : 'users'
+						controller : 'usersEditCtrl'
+					}).when('/upload/:id', {
+						templateUrl : 'js/users/upload.html',
+						controller : 'usersUploadCtrl'
 					}).when('/login', {
 						templateUrl : 'js/navigation/login.html',
 						controller : 'navigation'
