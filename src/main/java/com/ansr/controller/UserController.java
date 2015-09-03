@@ -1,13 +1,14 @@
 package com.ansr.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import com.ansr.service.StorageService;
 import com.ansr.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.gridfs.GridFSDBFile;
 
 @Controller
 @ResponseBody
@@ -121,7 +123,40 @@ public class UserController {
 			return "Unable to upload. File is empty.";
 		}
 	}
+	
+	// Get uploaded files for user 
+	@RequestMapping(value = "/upload/{id}", method = RequestMethod.GET)
+	public String getUploadedFilesName(@PathVariable("id") String userId) {
 
+	    List<String> filesName = storageService.getFilesNameByUser(userId);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonData = null;
+		try {
+			jsonData = objectMapper.writeValueAsString(filesName);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return jsonData;	   
+	}
+	
+	// Download file
+	@RequestMapping(value = "/download/{id}/{name:.+}", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
+		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+	    headers.add("Pragma", "no-cache");
+	    headers.add("Expires", "0");
+	    
+	    return ResponseEntity
+	            .ok()
+	            .headers(headers)
+	            .contentLength(file.getLength())
+	            .contentType(MediaType.parseMediaType("application/octet-stream"))
+	            .body(new InputStreamResource(file.getInputStream()));		
+	}
+	
 	@RequestMapping("/maritalStatus")
 	public String[] getMaritalStatus() {
 		MaritalStatus[] status = MaritalStatus.values();

@@ -1,12 +1,12 @@
 <div class="page-header">
-	<h3>Upload Files</h3>
+	<h3>Upload New Files</h3>
 </div>
 
  <button ngf-select="uploadFiles($files)" multiple
          accept="*" ngf-max-height="1000" ngf-max-size="10MB">
      Select Files</button>
  <br><br>
- <b>Files:</b>
+
  <ul>
    <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
      <span class="progress" ng-show="f.progress >= 0">
@@ -16,3 +16,15 @@
    </li>     
  </ul>
  {{errorMsg}}
+ 
+ 
+ <div class="page-header">
+	<h3>Download Existing Files</h3>
+</div>
+
+ <ul>
+   <li ng-repeat="fileEntry in fileNames" style="font:smaller">
+   		<!-- <a href="" ng-click="downloadFile(fileEntry)">{{fileEntry}}</a>  --> 		
+   		<a target="_self" href="/download/{{id}}/{{fileEntry}}" download="{{fileEntry}}">{{fileEntry}}</a>
+   </li>     
+ </ul>

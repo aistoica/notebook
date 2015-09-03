@@ -47,9 +47,19 @@ userApp.controller('users', function($scope, $resource, $http, User) {
 	
 });
 
-userApp.controller('usersUploadCtrl', function($scope, $routeParams, $timeout, Upload){
-    $scope.uploadFiles = function(files) {
-    	var id = $routeParams.id;
+userApp.controller('usersUploadCtrl', function($scope, $routeParams, $http, $timeout, Upload){
+	
+	var id = $routeParams.id;
+	$scope.id = $routeParams.id;
+		
+	$http.get('/upload/'+id).
+		then(function(resp) {
+			$scope.fileNames = resp.data;
+			console.log($scope.fileNames);
+		});
+	
+	$scope.uploadFiles = function(files) {
+    	//var id = $routeParams.id;
         $scope.files = files;
         angular.forEach(files, function(file) {
             if (file && !file.$error) {
@@ -74,4 +84,11 @@ userApp.controller('usersUploadCtrl', function($scope, $routeParams, $timeout, U
     		}   
         });
     }
+	
+/*	$scope.downloadFile = function(fileEntry) {
+		$http.get('/download/' + id + '/' + fileEntry).
+			then(function(resp) {
+				
+			});
+	}*/
 });
