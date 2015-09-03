@@ -4,19 +4,6 @@ userApp.factory('User', ['$resource', function($resource) {
 	return $resource('users/:id', {id: '@id'});
 }]);
 
-
-userApp.controller('usersEditCtrl', ['$scope', '$routeParams', '$location', 'User', 
-                                     function($scope, $routeParams, $location, User) {
-	$scope.statusList = ['married', 'not married'];
-	$scope.existinguser = User.get({id:$routeParams.id});
-	$scope.save = function() {
-		$scope.existinguser.$save(function() {
-			$location.path('/users');
-		});
-	};
-		
-}]);
-
 userApp.controller('usersAddCtrl', ['$scope', '$resource', '$http', '$location','User', 
                                     function($scope, $resource, $http, $location, User) {
 	$scope.users= [];
@@ -35,20 +22,20 @@ userApp.controller('usersAddCtrl', ['$scope', '$resource', '$http', '$location',
 }
 }]);
 
+userApp.controller('usersEditCtrl', ['$scope', '$routeParams', '$location', 'User', 
+                                     function($scope, $routeParams, $location, User) {
+	$scope.statusList = ['married', 'not married'];
+	$scope.existinguser = User.get({id:$routeParams.id});
+	$scope.save = function() {
+		$scope.existinguser.$save(function() {
+			$location.path('/users');
+		});
+	};
+		
+}]);
 
 userApp.controller('users', function($scope, $resource, $http, User) {
 	$scope.users= [];
-	
-/*	$scope.status = [];
-	$http.get('maritalStatus').success(function(data) {
-		$scope.status=data;
-		console.log(data);
-	});
-	*/
-/*	$http.get('/users/all').success(function(data) {
-		$scope.users = data;
-		console.log(data);
-	});	*/
 	
 	$scope.users = User.query();
 	

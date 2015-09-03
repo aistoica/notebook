@@ -9,8 +9,8 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
 @Configuration
-public class MongoConfiguration extends AbstractMongoConfiguration{
-	
+public class MongoConfiguration extends AbstractMongoConfiguration {
+
 	@Bean
 	public GridFsTemplate gridFsTemplate() throws Exception {
 		return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
@@ -24,7 +24,7 @@ public class MongoConfiguration extends AbstractMongoConfiguration{
 	@Override
 	@Bean
 	public Mongo mongo() throws Exception {
-		return new MongoClient("localhost");
+		return new MongoClient("127.0.0.1");
 	}
 
 }
