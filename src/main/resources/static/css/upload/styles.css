@@ -22,3 +22,20 @@ form .progress {
     background: orange;
     width: 0;
 }
+
+.thumb {
+    width: 100px;
+    height: 100px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+.user-image {
+    margin: 25px auto;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	max-height:170px;
+	max-width:170px;
+}

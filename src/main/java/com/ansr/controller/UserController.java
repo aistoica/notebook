@@ -1,11 +1,16 @@
 package com.ansr.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +74,7 @@ public class UserController {
 		return jsonData;
 	}
 
-	//Get user
+	// Get user
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 	public String getUsersById(@PathVariable("id") String userId) {
 		User user = userService.getUser(userId);
@@ -123,12 +128,12 @@ public class UserController {
 			return "Unable to upload. File is empty.";
 		}
 	}
-	
-	// Get uploaded files for user 
+
+	// Get uploaded files for user
 	@RequestMapping(value = "/upload/{id}", method = RequestMethod.GET)
 	public String getUploadedFilesName(@PathVariable("id") String userId) {
 
-	    List<String> filesName = storageService.getFilesNameByUser(userId);
+		List<String> filesName = storageService.getFilesNameByUser(userId);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonData = null;
 		try {
@@ -137,26 +142,50 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return jsonData;	   
+		return jsonData;
 	}
-	
+
+	// Download photo
+	@RequestMapping(value = "/downloadPhoto/{id}/{name:.+}", method = RequestMethod.GET)
+	public HttpEntity<String> downloadPhoto(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
+		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
+
+		InputStream content = file.getInputStream();
+		byte[] bytes = null;
+		try {
+			bytes = IOUtils.toByteArray(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String encodedContent = Base64.encodeBase64String(bytes);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		headers.setContentType(MediaType.valueOf("image/xyz"));
+		headers.setContentLength(encodedContent.length());
+
+		return new HttpEntity<String>(encodedContent, headers);
+
+	}
+
 	// Download file
 	@RequestMapping(value = "/download/{id}/{name:.+}", method = RequestMethod.GET)
-	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
+	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId,
+			@PathVariable("name") String fileName) {
 		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-	    headers.add("Pragma", "no-cache");
-	    headers.add("Expires", "0");
-	    
-	    return ResponseEntity
-	            .ok()
-	            .headers(headers)
-	            .contentLength(file.getLength())
-	            .contentType(MediaType.parseMediaType("application/octet-stream"))
-	            .body(new InputStreamResource(file.getInputStream()));		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+
+		return ResponseEntity.ok().headers(headers).contentLength(file.getLength())
+				.contentType(MediaType.parseMediaType("application/octet-stream"))
+				.body(new InputStreamResource(file.getInputStream()));
 	}
-	
+
 	@RequestMapping("/maritalStatus")
 	public String[] getMaritalStatus() {
 		MaritalStatus[] status = MaritalStatus.values();
@@ -165,6 +194,33 @@ public class UserController {
 			stringStatus[i] = status[i].getValue();
 		}
 		return stringStatus;
+	}
+
+	// Upload profile photo
+	@RequestMapping(value = "/uploadPhoto/{id}", method = RequestMethod.POST)
+	public String uploadPhoto(@RequestParam("file") MultipartFile file, @PathVariable("id") String userId) {
+		String msg = "";
+		String fileName = null;
+
+		if (file != null) {
+			try {
+				fileName = file.getOriginalFilename();
+				String storedId = storageService.save(file.getInputStream(), file.getContentType(),
+						file.getOriginalFilename(), userId);
+				msg += "You have successfully uploaded " + fileName + "<br/> with id " + storedId;
+
+				User user = userService.getUser(userId);
+				user.setPhoto(fileName);
+				userService.saveUser(user);
+
+			} catch (IOException e) {
+				return "You failed to upload " + fileName + ": " + e.getMessage() + "<br/>";
+			}
+
+			return msg;
+		} else {
+			return "Unable to upload. File is empty.";
+		}
 	}
 
 }

@@ -25,28 +25,28 @@ public class User {
 	private String idNumber;
 	private String idPersonalCode;
 	private String nationality;
-	//private MaritalStatus maritalStatus;
+	// private MaritalStatus maritalStatus;
 	private String maritalStatus;
 	private int noOfChildren;
 	private Contact contactInfo;
 	private Set<Payment> payments;
 	private Set<Disability> disabilities;
 	private Role role;
+	private String photo;
 
 	public User() {
 		payments = new HashSet<>();
 		disabilities = new HashSet<>();
 	}
-	
-	public User(String firstName, String lastName){
+
+	public User(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 
-	public User(String firstName, String lastName, Address currentAddress,
-			Address birthAddress, String idSeries, String idNumber,
-			String idPersonalCode, String nationality, String maritalStatus,
-			int noOfChildren, Contact contactInfo){ //, Role role) {
+	public User(String firstName, String lastName, Address currentAddress, Address birthAddress, String idSeries,
+			String idNumber, String idPersonalCode, String nationality, String maritalStatus, int noOfChildren,
+			Contact contactInfo) { // , Role role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.currentAddress = currentAddress;
@@ -58,7 +58,7 @@ public class User {
 		this.maritalStatus = maritalStatus;
 		this.noOfChildren = noOfChildren;
 		this.contactInfo = contactInfo;
-		//this.role = role;
+		// this.role = role;
 	}
 
 	public Address getBirthAddress() {
@@ -157,7 +157,6 @@ public class User {
 		this.idSeries = idSeries;
 	}
 
-	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -182,16 +181,20 @@ public class User {
 		this.role = role;
 	}
 
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", currentAddress=" + currentAddress
-				+ ", birthAddress=" + birthAddress + ", idSeries=" + idSeries
-				+ ", idNumber=" + idNumber + ", idPersonalCode="
-				+ idPersonalCode + ", nationality=" + nationality
-				+ ", maritalStatus=" + maritalStatus + ", noOfChildren="
-				+ noOfChildren + ", contactInfo=" + contactInfo + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", currentAddress="
+				+ currentAddress + ", birthAddress=" + birthAddress + ", idSeries=" + idSeries + ", idNumber="
+				+ idNumber + ", idPersonalCode=" + idPersonalCode + ", nationality=" + nationality + ", maritalStatus="
+				+ maritalStatus + ", noOfChildren=" + noOfChildren + ", contactInfo=" + contactInfo + "]";
 	}
-	
 
 }

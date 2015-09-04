@@ -22,6 +22,7 @@ userApp.controller('usersAddCtrl', ['$scope', '$resource', '$http', '$location',
 }
 }]);
 
+
 userApp.controller('usersEditCtrl', ['$scope', '$routeParams', '$location', 'User', 
                                      function($scope, $routeParams, $location, User) {
 	$scope.statusList = ['married', 'not married'];
@@ -85,6 +86,8 @@ userApp.controller('usersUploadCtrl', function($scope, $routeParams, $http, $tim
         });
     }
 	
+
+	
 /*	$scope.downloadFile = function(fileEntry) {
 		$http.get('/download/' + id + '/' + fileEntry).
 			then(function(resp) {
@@ -92,3 +95,51 @@ userApp.controller('usersUploadCtrl', function($scope, $routeParams, $http, $tim
 			});
 	}*/
 });
+
+userApp.controller('usersPhotoUploadCtrl', function($scope, $routeParams, $http, $timeout, Upload){
+	var id = $routeParams.id;
+	   $scope.uploadPic = function(file) {
+		    file.upload = Upload.upload({
+		      url: '/uploadPhoto/'+id,
+		      method: 'POST',
+		      file: file
+		    });
+
+		    file.upload.then(function (response) {
+		      $timeout(function () {
+		        file.result = response.data;
+		      });
+		    }, function (response) {
+		      if (response.status > 0)
+		        $scope.errorMsg = response.status + ': ' + response.data;
+		    });
+
+		    file.upload.progress(function (evt) {
+		      // Math.min is to fix IE which reports 200% sometimes
+		      file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+		    });
+		}		
+});
+
+userApp.controller('usersProfileCtrl', ['$scope', '$routeParams', '$location', '$http', 'User', 
+                                     function($scope, $routeParams, $location, $http, User) {
+	//$scope.statusList = ['married', 'not married'];
+	var photo;
+	var existinguser = User.get({id:$routeParams.id}, function (data) {
+	 	$http.get('/downloadPhoto/' + data.id + '/' + data.photo)
+		.then(function(resp) {
+			$scope.picFile = resp.data;
+			//console.log(resp.data);
+	});
+	 });
+
+
+
+
+/*	$scope.save = function() {
+		$scope.existinguser.$save(function() {
+			$location.path('/users');
+		});
+	};*/
+		
+}]);

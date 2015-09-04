@@ -21,9 +21,15 @@ angular
 					}).when('/users/:id', {
 						templateUrl : 'js/users/user_edit.html',
 						controller : 'usersEditCtrl'
+					}).when('/userProfile/:id', {
+						templateUrl : 'js/users/user_profile.html',
+						controller : 'usersProfileCtrl'
 					}).when('/upload/:id', {
 						templateUrl : 'js/users/upload.html',
 						controller : 'usersUploadCtrl'
+					}).when('/uploadPhoto/:id', {
+						templateUrl : 'js/users/upload_photo.html',
+						controller : 'usersPhotoUploadCtrl'
 					}).when('/login', {
 						templateUrl : 'js/navigation/login.html',
 						controller : 'navigation'
