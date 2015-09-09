@@ -53,12 +53,12 @@
 					<span class="help-block hide">Nationality is required</span>
 				</div>	
 			</div>
-			<div class="form-group">	
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Marital status</label>
 				<!-- <select name="status" ng-model="existinguser.maritalStatus" ng-options="s for s in status"> -->
 
 				<div class="col-md-10">
-					<select name="status" ng-model="existinguser.maritalStatus">
+					<select name="status" ng-model="existinguser.maritalStatus" ng-required="true">
 						<option value="">Select</option>
 						<option value="married"> Married</option>
 						<option value="not married">Not married</option>
@@ -201,8 +201,13 @@
 					<span class="help-block hide">A valid e-mail is required</span>
 				</div>				
 			</div>				
-			<button type="submit" class="btn btn-primary" ng-click="save()"> Save </button>
-			<br><br>
+
+			
+			<div class="col-sm-offset-3 col-sm-9">
+				<button type="submit" class="btn btn-primary" ng-click="save()"> Save </button>
+				<button type="submit" class="btn btn-default" ng-click="cancel()"> Cancel </button>
+				<br><br>
+			</div>
 		</form>	
 	</div>
 </div>

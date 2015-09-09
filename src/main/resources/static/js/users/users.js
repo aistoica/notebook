@@ -8,6 +8,13 @@ userApp.controller('usersAddCtrl', ['$scope', '$resource', '$http', '$location',
                                     function($scope, $resource, $http, $location, User) {
 	$scope.users= [];
 	$scope.saveUser = function() {
+		
+		//validate event
+		$scope.$broadcast('show-errors-event');
+		
+		if($scope.userForm.$invalid)
+			return
+				
 		$scope.users.push($scope.newuser);
 	
 		//create resource
@@ -19,7 +26,12 @@ userApp.controller('usersAddCtrl', ['$scope', '$resource', '$http', '$location',
 		});
 		
 		$scope.newuser = {};
-}
+	}
+	
+	$scope.cancel = function() {
+		$scope.newuser={}		
+		$location.path('/users');
+	}
 }]);
 
 
@@ -28,10 +40,21 @@ userApp.controller('usersEditCtrl', ['$scope', '$routeParams', '$location', 'Use
 	$scope.statusList = ['married', 'not married'];
 	$scope.existinguser = User.get({id:$routeParams.id});
 	$scope.save = function() {
+		
+		//validate event
+		$scope.$broadcast('show-errors-event');
+		
+		if($scope.userForm.$invalid)
+			return
+			
 		$scope.existinguser.$save(function() {
 			$location.path('/users');
 		});
 	};
+	$scope.cancel = function() {
+		$scope.newuser={}		
+		$location.path('/users');
+	}
 		
 }]);
 

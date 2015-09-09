@@ -1,7 +1,6 @@
 package com.ansr.service;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,11 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public User saveUser(User u) {
 		return userRepository.save(u);
 	}
-	
+
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}

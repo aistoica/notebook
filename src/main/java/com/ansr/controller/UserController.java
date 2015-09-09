@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ansr.dto.Role;
 import com.ansr.dto.User;
 import com.ansr.service.StorageService;
 import com.ansr.service.UserService;
@@ -43,11 +45,12 @@ public class UserController {
 
 	// Create new user
 	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
-	public @ResponseBody String saveUserRestful(@RequestBody User user) {
+	public @ResponseBody String saveUser(@RequestBody User user) {
 
 		String response = "{\"message\":\"Post With ngResource: The user firstname: " + user.getFirstName()
 				+ ", lastname: " + user.getLastName() + "birth city" + user.getBirthAddress().getCity() + "\"}";
 
+		user.setRole(Role.USER);
 		userService.saveUser(user);
 
 		return response;

@@ -1,5 +1,5 @@
 angular
-		.module('hello', [ 'ngRoute', 'ngResource', 'users', 'auth', 'home', 'message', 'navigation', 'validation' ])
+		.module('hello', [ 'ngRoute', 'ngResource', 'users', 'auth', 'home', 'navigation', 'validation' ])
 		.config(
 
 				function($routeProvider, $httpProvider, $locationProvider) {
@@ -9,9 +9,6 @@ angular
 					$routeProvider.when('/', {
 						templateUrl : 'js/home/home.html',
 						controller : 'home'
-					}).when('/message', {
-						templateUrl : 'js/message/message.html',
-						controller : 'message'
 					}).when('/users', {
 						templateUrl : 'js/users/users.html',
 						controller : 'users'

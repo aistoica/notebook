@@ -17,41 +17,40 @@ import com.mongodb.gridfs.GridFSFile;
 
 @Service
 public class StorageService {
-	 @Autowired
-	 GridFsOperations gridOperations;
- 
+	
+	@Autowired
+	GridFsOperations gridOperations;
 
-    public String save(InputStream inputStream, String contentType, String filename, String id) {
-    	DBObject metaData = new BasicDBObject();
-    	metaData.put("userId", id);
-    	GridFSFile f = gridOperations.store(inputStream, filename, contentType, metaData);
-    	return f.getId().toString();
-    }
- 
+	//saves image in db
+	public String save(InputStream inputStream, String contentType, String filename, String id) {
+		DBObject metaData = new BasicDBObject();
+		//user id is put in metadata
+		metaData.put("userId", id);
+		GridFSFile f = gridOperations.store(inputStream, filename, contentType, metaData);
+		return f.getId().toString();
+	}
 
-/*    public GridFSDBFile get(String userId) {
-        return gridFs.findOne(new ObjectId(id));
-    }*/
- 
+	//returns user files
+	public List<GridFSDBFile> getFilesByUser(String userId) {
+		List<GridFSDBFile> files = gridOperations
+				.find(new Query().addCriteria(Criteria.where("metadata.userId").is(userId)));
+		return files;
+	}
 
-    public List<GridFSDBFile> getFilesByUser(String userId) {
-      List<GridFSDBFile> files =  gridOperations.find(new Query().addCriteria(Criteria.where("metadata.userId").is(userId)));
-      return files;
-    }
-    
-    public GridFSDBFile getFileByUserAndName(String userId, String name) {
-    	Query q = new Query();
-    	q.addCriteria(Criteria.where("metadata.userId").is(userId));
-    	q.addCriteria(Criteria.where("filename").is(name));
-        GridFSDBFile file =  gridOperations.findOne(q);
-        return file;
-    }
+	//returns a file by name belonging to a certain user
+	public GridFSDBFile getFileByUserAndName(String userId, String name) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("metadata.userId").is(userId));
+		q.addCriteria(Criteria.where("filename").is(name));
+		GridFSDBFile file = gridOperations.findOne(q);
+		return file;
+	}
 
-
+	//returns the file names belonging to a certain user
 	public List<String> getFilesNameByUser(String userId) {
 		List<GridFSDBFile> files = getFilesByUser(userId);
 		List<String> filesName = new ArrayList<String>();
-		for(GridFSDBFile f : files) {
+		for (GridFSDBFile f : files) {
 			filesName.add(f.getFilename());
 		}
 		return filesName;

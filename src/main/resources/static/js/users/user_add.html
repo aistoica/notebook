@@ -50,15 +50,17 @@
 					<span class="help-block hide">Nationality is required</span>
 				</div>	
 			</div>
-			<div class="form-group">	
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Marital status</label>
 				<!-- <select name="status" ng-model="newuser.maritalStatus" ng-options="s for s in status"> -->
 				<div class="col-md-10">
-					<select name="status" ng-model="newuser.maritalStatus">
+					<select name="status" ng-model="newuser.maritalStatus" ng-required="true">
 						<option value="">Select</option>
 						<option value="married"> Married</option>
 						<option value="not married">Not married</option>
-					</select>	
+					</select>
+					<span class="help-block hide">An option is required</span>
+						
 				</div>	
 				<br><br><br>
 			</div>
@@ -193,10 +195,11 @@
 			</div>				
 
 			<div class="col-sm-offset-3 col-sm-9">
-				<button type="submit" class="btn btn-primary" ng-click="saveUser()" ng-disabled="userForm.$invalid"> Save </button>
-				<button type="submit" class="btn btn-default" ng-click=""> Cancel </button>
+				<button type="submit" class="btn btn-primary" ng-click="saveUser()"> Save </button>
+				<button type="submit" class="btn btn-default" ng-click="cancel()"> Cancel </button>
+				<br><br>
 			</div>
-			<br><br>
+			
 		</form>	
 	</div>
 </div>
