@@ -8,7 +8,7 @@
 		<h4>User list</h4>
 	</div>
 	<div class="pull-right">
-		<a href="/users/new">
+		<a href="/#/users/new">
 			<button type="button" class="btn btn-primary">
 				NEW
 			</button>
@@ -35,14 +35,14 @@
 		<tr ng-repeat="user in users">
 			<!-- <td class="text-center"><input type="checkbox" ng-model="checked" /></td> -->
 			<td class="text-center" style="display:none" ng-model="id">{{user.id}} </td>
-			<td class="text-center"><a ng-href="/userProfile/{{user.id}}">{{user.firstName}}</a></td>
-			<td class="text-center"><a ng-href="/userProfile/{{user.id}}">{{user.lastName}}</a></td>		
+			<td class="text-center"><a ng-href="/#/userProfile/{{user.id}}">{{user.firstName}}</a></td>
+			<td class="text-center"><a ng-href="/#/userProfile/{{user.id}}">{{user.lastName}}</a></td>
 			<td class="text-center">{{user.idSeries}} {{user.idNumber}}</td>	
 			<td class="text-center">{{user.idPersonalCode}}</td>
 			<td class="text-center">{{user.contactInfo.email1}} <br> {{user.contactInfo.email2}}</td>	
 			<td class="text-center">{{user.contactInfo.telephone1}} <br> {{user.contactInfo.telephone2}}</td>
 			<td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Edit">
-				<a ng-href="/users/{{user.id}}">
+				<a ng-href="/#/users/{{user.id}}">
 					<button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal">
 					    <span class="glyphicon glyphicon-pencil"></span> 
 					</button>	
@@ -56,14 +56,14 @@
 				</a>
 			</p></td>
 			<td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Upload">	
-				<a ng-href="/upload/{{user.id}}">
+				<a ng-href="/#/upload/{{user.id}}">
 					<button type="button" class="btn btn-primary btn-xs" data-title="Upload" data-toggle="modal" >
 					   <span class="glyphicon glyphicon-upload" ></span>
 					</button>
 				</a>
 			</p></td>
 			<td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Photo">
-			<a ng-href="/uploadPhoto/{{user.id}}">
+			<a ng-href="/#/uploadPhoto/{{user.id}}">
 				<button type="button"  class="btn btn-primary btn-xs" data-title="Photo" data-toggle="modal" >
 				   <span class="glyphicon glyphicon-picture"></span>
 				</button>		
