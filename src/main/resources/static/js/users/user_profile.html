@@ -2,6 +2,13 @@
 	<h1>User Profile </h1>
 </div>
 
-<div class="col-md-12">
-	<img ng-src="data:image/xyz;base64,{{picFile}}" class="user-image"/>
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img ng-src="{{picFile}}" class="user-image">
+      <div class="caption text-center">
+        <a href="#" class="btn btn-default " role="button">Change</a></p>
+      </div>
+    </div>
+  </div>
 </div>

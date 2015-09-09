@@ -4,123 +4,50 @@
 
 <div class="col-md-12">
 	<div class="col-md-8">
-		<form role="form" class="form-horizontal">
-			<div class="form-group">
-				<label class="col-md-2">Firstname</label>
+		<form role="form" class="form-horizontal" name="userForm" novalidate>
+			<legend>Personal Info</legend>
+			<div class="form-group" show-errors>
+				<label class="col-md-2">First name</label>
 				<div class="col-md-10">
-					<input type="text" name="firstname" ng-model="newuser.firstName" class="form-control"/>
+					<input type="text" id ="firstname" name="firstname" ng-model="newuser.firstName" class="form-control" ng-required="true"/>
+					<span class="help-block hide">First name is required</span>
 				</div>
 			</div>
 	
-			<div class="form-group">
-				<label class="col-md-2">Lastname</label>
+			<div class="form-group" show-errors>
+				<label class="col-md-2">Last name</label>
 				<div class="col-md-10">
-					<input type="text" name="lastname" ng-model="newuser.lastName" class="form-control"/>	
+					<input type="text" name="lastname" ng-model="newuser.lastName" class="form-control" ng-required="true"/>	
+					<span class="help-block hide">Last name is required</span>
 				</div>	
-			</div>
-			<div class="form-group">
-				<label>Current address</label>
-			</div>
-			<div class="form-group">
-
-				<label class="col-md-2">Country</label>
-				<div class="col-md-10">
-					<input type="text" name="country" ng-model="newuser.currentAddress.country" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2">City</label>
-				<div class="col-md-10">
-					<input type="text" name="city" ng-model="newuser.currentAddress.city" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2">District</label>
-				<div class="col-md-10">
-					<input type="text" name="district" ng-model="newuser.currentAddress.district" class="form-control"/>
-				</div>
-			</div>	
-			<div class="form-group">
-				<label class="col-md-2">Street Name</label>
-				<div class="col-md-10">
-					<input type="text" name="streetname" ng-model="newuser.currentAddress.streetName" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2">Street Number</label>
-				<div class="col-md-10">
-					<input type="text" name="streeno" ng-model="newuser.currentAddress.streetNo" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2">Zip Code</label>
-				<div class="col-md-10">
-					<input type="text" name="zipcode" ng-model="newuser.currentAddress.zipCode" class="form-control"/>
-				</div>		
 			</div>
 			
-			<div class="form-group">
-				<label>Birth address</label>
-			</div>
-			<div class="form-group">
-
-				<label class="col-md-2">Country</label>
-				<div class="col-md-10">
-					<input type="text" name="country" ng-model="newuser.birthAddress.country" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-md-2">City</label>
-				<div class="col-md-10">
-					<input type="text" name="city" ng-model="newuser.birthAddress.city" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-md-2">District</label>
-				<div class="col-md-10">
-					<input type="text" name="district" ng-model="newuser.birthAddress.district" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-md-2">Street Name</label>
-				<div class="col-md-10">
-					<input type="text" name="streetname" ng-model="newuser.birthAddress.streetName" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-md-2">Street Number</label>
-				<div class="col-md-10">
-					<input type="text" name="streeno" ng-model="newuser.birthAddress.streetNo" class="form-control"/>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-md-2">Zip Code</label>
-				<div class="col-md-10">
-					<input type="text" name="zipcode" ng-model="newuser.birthAddress.zipCode" class="form-control"/>
-				</div>		
-			</div>
-			<div class="form-group">
+			<div class="form-group" show-errors>
 				<label class="col-md-2">Id Series</label>
 				<div class="col-md-10">
-					<input type="text" name="idseries" ng-model="newuser.idSeries" class="form-control"/>
+					<input type="text" name="idseries" ng-model="newuser.idSeries" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Id series is required</span>
 				</div>			
 			</div>
-			<div class="form-group">	
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Id Number</label>
 				<div class="col-md-10">
-					<input type="text" name="idno" ng-model="newuser.idNumber" class="form-control"/>
+					<input type="text" name="idno" ng-model="newuser.idNumber" class="form-control" ng-pattern=" /^\d+$/"  ng-required="true" />
+					<span class="help-block hide">A valid id number is required</span>
 				</div>	
 			</div>
-			<div class="form-group">	
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Personal Code</label>
 				<div class="col-md-10">
-					<input type="text" name="personalcode" ng-model="newuser.idPersonalCode" class="form-control"/>
+					<input type="text" name="personalcode" ng-model="newuser.idPersonalCode" class="form-control" ng-pattern=" /^\d+$/" ng-required="true"/>
+					<span class="help-block hide">A valid number is required</span>
 				</div>	
 			</div>
-			<div class="form-group">	
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Nationality</label>
 				<div class="col-md-10">
-					<input type="text" name="nationality" ng-model="newuser.nationality" class="form-control"/>
+					<input type="text" name="nationality" ng-model="newuser.nationality" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Nationality is required</span>
 				</div>	
 			</div>
 			<div class="form-group">	
@@ -135,41 +62,140 @@
 				</div>	
 				<br><br><br>
 			</div>
-			<div class="form-group">
+			<div class="form-group" show-errors>
 				<label class="col-md-2">Number of children</label>
 				<div class="col-md-10">
-					<input type="text" name="children" ng-model="newuser.noOfChildren" class="form-control"/>
-					</div>
+					<input type="number" name="children" ng-model="newuser.noOfChildren" class="form-control" ng-required="true" min="0"/>
+					<span class="help-block hide">A valid number is required</span>
+				</div>
+			</div>			
+			
+			<legend>Current address</legend>
+			<div class="form-group" show-errors>
+				<label class="col-md-2">Country</label>
+				<div class="col-md-10">
+					<input type="text" id="country" name="currentcountry" ng-model="newuser.currentAddress.country" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Country is required</span>
+				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" show-errors>
+				<label class="col-md-2">City</label>
+				<div class="col-md-10">
+					<input type="text" name="currentcity" ng-model="newuser.currentAddress.city" class="form-control" ng-required="true"/>
+					<span class="help-block hide">City is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>
+				<label class="col-md-2" >District</label>
+				<div class="col-md-10">
+					<input type="text" name="currentdistrict" ng-model="newuser.currentAddress.district" class="form-control" ng-required="true"/>
+					<span class="help-block hide">District is required</span>
+				</div>
+			</div>	
+			<div class="form-group" show-errors>
+				<label class="col-md-2">Street Name</label>
+				<div class="col-md-10">
+					<input type="text" name="currentstreetname" ng-model="newuser.currentAddress.streetName" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Street name is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>
+				<label class="col-md-2">Street Number</label>
+				<div class="col-md-10">
+					<input type="number" name="currentstreeno" ng-model="newuser.currentAddress.streetNo" class="form-control" min="1"/>
+					<span class="help-block hide">A valid number is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>
+				<label class="col-md-2">Zip Code</label>
+				<div class="col-md-10">
+					<input type="text" name="currentzipcode" ng-model="newuser.currentAddress.zipCode" class="form-control" ng-required="true" ng-pattern="/^[0-9]{6}$/">
+					<span class="help-block hide">A 6 digits code is required</span>
+				</div>		
+			</div>
+			
+			<legend>Birth address</legend>
+			<div class="form-group" show-errors>
+
+				<label class="col-md-2">Country</label>
+				<div class="col-md-10">
+					<input type="text" name="country" ng-model="newuser.birthAddress.country" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Country is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">City</label>
+				<div class="col-md-10">
+					<input type="text" name="city" ng-model="newuser.birthAddress.city" class="form-control" ng-required="true"/>
+					<span class="help-block hide">City is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">District</label>
+				<div class="col-md-10">
+					<input type="text" name="district" ng-model="newuser.birthAddress.district" class="form-control" ng-required="true"/>
+					<span class="help-block hide">District is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">Street Name</label>
+				<div class="col-md-10">
+					<input type="text" name="streetname" ng-model="newuser.birthAddress.streetName" class="form-control" ng-required="true"/>
+					<span class="help-block hide">Street name is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">Street Number</label>
+				<div class="col-md-10">
+					<input type="number" name="streeno" ng-model="newuser.birthAddress.streetNo" class="form-control" min="1"/>
+					<span class="help-block hide">A valid street number is required</span>
+				</div>
+			</div>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">Zip Code</label>
+				<div class="col-md-10">
+					<input type="text" name="zipcode" ng-model="newuser.birthAddress.zipCode" class="form-control" ng-required="true" ng-pattern="/^[0-9]{6}$/"/>
+					<span class="help-block hide">A 6 digits code is required</span>
+				</div>		
+			</div>
+			
+<!-- 			<div class="form-group">
 				<label>Contact</label>
-			</div>
-			<div class="form-group">	
+			</div> -->
+			<legend>Contact</legend>
+			<div class="form-group" show-errors>	
 				<label class="col-md-2">Telephone 1</label>
 				<div class="col-md-10">
-					<input type="text" name="telephone1" ng-model="newuser.contactInfo.telephone1" class="form-control"/>
+					<input type="text" name="telephone1" ng-model="newuser.contactInfo.telephone1" class="form-control" ng-required="true" ng-pattern="/^\+[1-9]{1}[0-9]{3,14}$/"/>
+					<span class="help-block hide">A valid telephone number in internation format is required</span>
 				</div>
 			</div>
-			<div class="form-group">			
+			<div class="form-group" show-errors>			
 				<label class="col-md-2">Telephone 2</label>
 				<div class="col-md-10">
-					<input type="text" name="telephone2" ng-model="newuser.contactInfo.telephone2" class="form-control"/>
+					<input type="text" name="telephone2" ng-model="newuser.contactInfo.telephone2" class="form-control" ng-pattern="/^\+[1-9]{1}[0-9]{3,14}$/"/>
+					<span class="help-block hide">A valid telephone number in internation format is required</span>
 				</div>
 			</div>
-			<div class="form-group">				
-				<label class="col-md-2">Email1</label>
+			<div class="form-group" show-errors>				
+				<label class="col-md-2">E-mail 1</label>
 				<div class="col-md-10">
-					<input type="text" name="email1" ng-model="newuser.contactInfo.email1" class="form-control"/>
+					<input type="email" name="email1" ng-model="newuser.contactInfo.email1" class="form-control" ng-required="true"/>
+					<span class="help-block hide">A valid e-mail is required</span>
 				</div>			
 			</div>
-			<div class="form-group">	
-				<label class="col-md-2">Email2</label>
+			<div class="form-group" show-errors>	
+				<label class="col-md-2">E-mail 2</label>
 				<div class="col-md-10">
-					<input type="text" name="email2" ng-model="newuser.contactInfo.email2" class="form-control"/>
+					<input type="email" name="email2" ng-model="newuser.contactInfo.email2" class="form-control"/>
+					<span class="help-block hide">A valid e-mail is required</span>
 				</div>				
 			</div>				
 
-			<button type="submit" class="btn btn-primary" ng-click="saveUser()"> Save </button>
+			<div class="col-sm-offset-3 col-sm-9">
+				<button type="submit" class="btn btn-primary" ng-click="saveUser()" ng-disabled="userForm.$invalid"> Save </button>
+				<button type="submit" class="btn btn-default" ng-click=""> Cancel </button>
+			</div>
 			<br><br>
 		</form>	
 	</div>

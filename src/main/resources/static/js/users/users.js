@@ -126,12 +126,18 @@ userApp.controller('usersProfileCtrl', ['$scope', '$routeParams', '$location', '
 	//$scope.statusList = ['married', 'not married'];
 	var photo;
 	var existinguser = User.get({id:$routeParams.id}, function (data) {
-	 	$http.get('/downloadPhoto/' + data.id + '/' + data.photo)
-		.then(function(resp) {
-			$scope.picFile = resp.data;
-			//console.log(resp.data);
-	});
-	 });
+		if(data.photo == null)
+			$scope.picFile = '/images/default_user.png';
+		else {
+		 	$http.get('/downloadPhoto/' + data.id + '/' + data.photo)
+			.then(function(resp) {
+				$scope.picFile = resp.data;
+				//console.log(resp.data);
+				$scope.user = existinguser;
+			});
+		}
+	
+});
 
 
 

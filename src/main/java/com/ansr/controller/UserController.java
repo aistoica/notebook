@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
-import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.ansr.dto.MaritalStatus;
 import com.ansr.dto.User;
 import com.ansr.service.StorageService;
 import com.ansr.service.UserService;
@@ -47,9 +44,7 @@ public class UserController {
 	// Create new user
 	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
 	public @ResponseBody String saveUserRestful(@RequestBody User user) {
-		//
-		// Code processing the input parameters
-		//
+
 		String response = "{\"message\":\"Post With ngResource: The user firstname: " + user.getFirstName()
 				+ ", lastname: " + user.getLastName() + "birth city" + user.getBirthAddress().getCity() + "\"}";
 
@@ -79,6 +74,7 @@ public class UserController {
 	public String getUsersById(@PathVariable("id") String userId) {
 		User user = userService.getUser(userId);
 
+		//convert object to json
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonData = null;
 		try {
@@ -145,57 +141,6 @@ public class UserController {
 		return jsonData;
 	}
 
-	// Download photo
-	@RequestMapping(value = "/downloadPhoto/{id}/{name:.+}", method = RequestMethod.GET)
-	public HttpEntity<String> downloadPhoto(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
-		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
-
-		InputStream content = file.getInputStream();
-		byte[] bytes = null;
-		try {
-			bytes = IOUtils.toByteArray(content);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		String encodedContent = Base64.encodeBase64String(bytes);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
-		headers.setContentType(MediaType.valueOf("image/xyz"));
-		headers.setContentLength(encodedContent.length());
-
-		return new HttpEntity<String>(encodedContent, headers);
-
-	}
-
-	// Download file
-	@RequestMapping(value = "/download/{id}/{name:.+}", method = RequestMethod.GET)
-	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId,
-			@PathVariable("name") String fileName) {
-		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
-
-		return ResponseEntity.ok().headers(headers).contentLength(file.getLength())
-				.contentType(MediaType.parseMediaType("application/octet-stream"))
-				.body(new InputStreamResource(file.getInputStream()));
-	}
-
-	@RequestMapping("/maritalStatus")
-	public String[] getMaritalStatus() {
-		MaritalStatus[] status = MaritalStatus.values();
-		String[] stringStatus = new String[status.length];
-		for (int i = 0; i < status.length; i++) {
-			stringStatus[i] = status[i].getValue();
-		}
-		return stringStatus;
-	}
-
 	// Upload profile photo
 	@RequestMapping(value = "/uploadPhoto/{id}", method = RequestMethod.POST)
 	public String uploadPhoto(@RequestParam("file") MultipartFile file, @PathVariable("id") String userId) {
@@ -222,5 +167,73 @@ public class UserController {
 			return "Unable to upload. File is empty.";
 		}
 	}
+
+	// Download profile photo
+	@RequestMapping(value = "/downloadPhoto/{id}/{name:.+}", method = RequestMethod.GET)
+	public ResponseEntity<String> downloadPhoto(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
+
+		//set the headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		
+		//get file from db
+		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
+
+		//if file doesn't exist, return 404
+		if(file == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The file was not found");
+		}
+		
+		//get file content
+		InputStream content = file.getInputStream();
+		
+		//convert content to byte array
+		byte[] bytes = null;
+		try {
+			bytes = IOUtils.toByteArray(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//encode the content as string base 64 to use data uri
+		String encodedContent = "data:image/xyz;base64," + Base64.encodeBase64String(bytes);
+
+		//set the content type: any type of image and the content length
+		headers.setContentType(MediaType.valueOf("image/xyz"));
+		headers.setContentLength(encodedContent.length());
+
+		//return the encoded image
+		return ResponseEntity.ok().headers(headers).body(encodedContent);
+
+	}
+
+	// Download file
+	@RequestMapping(value = "/download/{id}/{name:.+}", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId,
+			@PathVariable("name") String fileName) {
+		
+		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+
+		return ResponseEntity.ok().headers(headers).contentLength(file.getLength())
+				.contentType(MediaType.parseMediaType("application/octet-stream"))
+				.body(new InputStreamResource(file.getInputStream()));
+	}
+
+
+/*	@RequestMapping("/maritalStatus")
+	public String[] getMaritalStatus() {
+		MaritalStatus[] status = MaritalStatus.values();
+		String[] stringStatus = new String[status.length];
+		for (int i = 0; i < status.length; i++) {
+			stringStatus[i] = status[i].getValue();
+		}
+		return stringStatus;
+	}*/
 
 }
