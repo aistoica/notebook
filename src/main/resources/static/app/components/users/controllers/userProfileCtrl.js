@@ -5,7 +5,7 @@ angular.module('users')
 var photo;
 var existinguser = User.get({id:$routeParams.id}, function (data) {
 	if(data.photo == null)
-		$scope.picFile = '/images/default_user.png';
+		$scope.picFile = 'assets/images/default_user.png';
 	else {
 	 	$http.get('/downloadPhoto/' + data.id + '/' + data.photo)
 		.then(function(resp) {

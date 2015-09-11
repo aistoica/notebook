@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -74,7 +75,7 @@ public class UserController {
 	public String getUsersById(@PathVariable("id") String userId) {
 		User user = userService.getUser(userId);
 
-		//convert object to json
+		// convert object to json
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonData = null;
 		try {
@@ -99,7 +100,8 @@ public class UserController {
 	// Delete user
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
 	public void deleteUser(@PathVariable("id") String userId) {
-		this.userService.delete(userId);
+		storageService.deleteAllFilesByUser(userId);
+		userService.delete(userId);
 	}
 
 	// Upload files to user
@@ -110,14 +112,9 @@ public class UserController {
 
 		if (files != null && files.length > 0) {
 			for (int i = 0; i < files.length; i++) {
-				try {
-					fileName = files[i].getOriginalFilename();
-					String storedId = storageService.save(files[i].getInputStream(), files[i].getContentType(),
-							files[i].getOriginalFilename(), userId);
-					msg += "You have successfully uploaded " + fileName + "with id " + storedId;
-				} catch (IOException e) {
-					return "You failed to upload " + fileName + ": " + e.getMessage() + "<br/>";
-				}
+				fileName = files[i].getOriginalFilename();
+				String storedId = storageService.save(files[i], userId);
+				msg += "You have successfully uploaded " + fileName + "with id " + storedId;
 			}
 			return msg;
 		} else {
@@ -148,19 +145,13 @@ public class UserController {
 		String fileName = null;
 
 		if (file != null) {
-			try {
-				fileName = file.getOriginalFilename();
-				String storedId = storageService.save(file.getInputStream(), file.getContentType(),
-						file.getOriginalFilename(), userId);
-				msg += "You have successfully uploaded " + fileName + "<br/> with id " + storedId;
+			fileName = file.getOriginalFilename();
+			String storedId = storageService.save(file, userId);
+			msg += "You have successfully uploaded " + fileName + "<br/> with id " + storedId;
 
-				User user = userService.getUser(userId);
-				user.setPhoto(fileName);
-				userService.saveUser(user);
-
-			} catch (IOException e) {
-				return "You failed to upload " + fileName + ": " + e.getMessage() + "<br/>";
-			}
+			User user = userService.getUser(userId);
+			user.setPhoto(fileName);
+			userService.saveUser(user);
 
 			return msg;
 		} else {
@@ -170,26 +161,29 @@ public class UserController {
 
 	// Download profile photo
 	@RequestMapping(value = "/downloadPhoto/{id}/{name:.+}", method = RequestMethod.GET)
-	public ResponseEntity<String> downloadPhoto(@PathVariable("id") String userId, @PathVariable("name") String fileName) {
+	public ResponseEntity<String> downloadPhoto(@PathVariable("id") String userId,
+			@PathVariable("name") String fileName) {
 
-		//set the headers
+		// set the headers
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		headers.add("Pragma", "no-cache");
 		headers.add("Expires", "0");
-		
-		//get file from db
+
+		// get file from db
 		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
 
-		//if file doesn't exist, return 404
-		if(file == null) {
+		// if file doesn't exist, return 404
+		if (file == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The file was not found");
 		}
-		
-		//get file content
+
+		// get file content
 		InputStream content = file.getInputStream();
-		
-		//convert content to byte array
+
+		// get file type
+		String contentType = FilenameUtils.getExtension(fileName);
+		// convert content to byte array
 		byte[] bytes = null;
 		try {
 			bytes = IOUtils.toByteArray(content);
@@ -197,14 +191,14 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		//encode the content as string base 64 to use data uri
-		String encodedContent = "data:image/xyz;base64," + Base64.encodeBase64String(bytes);
+		// encode the content as string base 64 to use data uri
+		String encodedContent = "data:image/"+contentType+";base64," + Base64.encodeBase64String(bytes);
 
-		//set the content type: any type of image and the content length
+		// set the content type: any type of image and the content length
 		headers.setContentType(MediaType.valueOf("image/xyz"));
 		headers.setContentLength(encodedContent.length());
 
-		//return the encoded image
+		// return the encoded image
 		return ResponseEntity.ok().headers(headers).body(encodedContent);
 
 	}
@@ -213,7 +207,7 @@ public class UserController {
 	@RequestMapping(value = "/download/{id}/{name:.+}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String userId,
 			@PathVariable("name") String fileName) {
-		
+
 		GridFSDBFile file = storageService.getFileByUserAndName(userId, fileName);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -225,15 +219,11 @@ public class UserController {
 				.body(new InputStreamResource(file.getInputStream()));
 	}
 
-
-/*	@RequestMapping("/maritalStatus")
-	public String[] getMaritalStatus() {
-		MaritalStatus[] status = MaritalStatus.values();
-		String[] stringStatus = new String[status.length];
-		for (int i = 0; i < status.length; i++) {
-			stringStatus[i] = status[i].getValue();
-		}
-		return stringStatus;
-	}*/
+	/*
+	 * @RequestMapping("/maritalStatus") public String[] getMaritalStatus() {
+	 * MaritalStatus[] status = MaritalStatus.values(); String[] stringStatus =
+	 * new String[status.length]; for (int i = 0; i < status.length; i++) {
+	 * stringStatus[i] = status[i].getValue(); } return stringStatus; }
+	 */
 
 }
