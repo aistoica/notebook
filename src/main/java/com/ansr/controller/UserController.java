@@ -40,9 +40,6 @@ public class UserController {
 	@Autowired
 	private StorageService storageService;
 
-	@Autowired
-	GridFsTemplate gridFsTemplate;
-
 	// Create new user
 	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
 	public @ResponseBody String saveUser(@RequestBody User user) {
@@ -117,7 +114,7 @@ public class UserController {
 					fileName = files[i].getOriginalFilename();
 					String storedId = storageService.save(files[i].getInputStream(), files[i].getContentType(),
 							files[i].getOriginalFilename(), userId);
-					msg += "You have successfully uploaded " + fileName + "<br/> with id " + storedId;
+					msg += "You have successfully uploaded " + fileName + "with id " + storedId;
 				} catch (IOException e) {
 					return "You failed to upload " + fileName + ": " + e.getMessage() + "<br/>";
 				}

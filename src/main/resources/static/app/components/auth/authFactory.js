@@ -1,4 +1,4 @@
-angular.module('auth', []).factory(
+angular.module('auth',[]).factory(
 		'auth',
 
 		function($rootScope, $http, $location) {
