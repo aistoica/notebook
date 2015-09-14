@@ -1,14 +1,150 @@
 <div class="page-header">
-	<h1>User Profile </h1>
+	<h1>User Profile</h1>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
       <img ng-src="{{picFile}}" class="user-image">
       <div class="caption text-center">
-        <a href="#" class="btn btn-default " role="button">Change</a></p>
+        <a ng-href="/#/uploadPhoto/{{existinguser.id}}" class="btn btn-default " role="button">Change</a></p>
       </div>
     </div>
   </div>
+  
+</div> -->
+
+<div class="col-md-12">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{existinguser.firstName}}
+				{{existinguser.lastName}}</h3>
+		</div>
+
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-3 col-lg-3" align="center">
+					<div class="thumbnail">
+						<img alt="User Pic" ng-src="{{picFile}}" class="img-responsive">
+						<div class="caption text-center">
+							<a ng-href="/#/uploadPhoto/{{existinguser.id}}"
+								class="btn btn-default " role="button">Change</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class=" col-md-9 col-lg-9 ">
+					<table class="table table-user-information">
+						<tbody>
+							<tr>
+								<td><b>Personal Info</b></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Id Series:</td>
+								<td>{{existinguser.idSeries}}</td>
+							</tr>
+							<tr>
+								<td>Id Number:</td>
+								<td>{{existinguser.idNumber}}</td>
+							</tr>
+							<tr>
+								<td>Personal Code:</td>
+								<td>{{existinguser.idPersonalCode}}</td>
+							</tr>
+							<tr>
+								<td>Nationality:</td>
+								<td>{{existinguser.nationality}}</td>
+							</tr>
+
+							<tr>
+								<td>Marital status:</td>
+								<td>{{existinguser.maritalStatus}}</td>
+							</tr>
+							<tr>
+								<td>Number of children:</td>
+								<td>{{existinguser.noOfChildren}}</td>
+							</tr>
+							<tr>
+								<td><b>Current address</b></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Country:</td>
+								<td>{{existinguser.currentAddress.country}}</td>
+							</tr>
+							<tr>
+								<td>City:</td>
+								<td>{{existinguser.currentAddress.city}}</td>
+							</tr>
+							<tr>
+								<td>District:</td>
+								<td>{{existinguser.currentAddress.district}}</td>
+							</tr>
+							<tr>
+								<td>Street name:</td>
+								<td>{{existinguser.currentAddress.streetName}}</td>
+							</tr>
+							<tr>
+								<td>Street number:</td>
+								<td>{{existinguser.currentAddress.streetNo}}</td>
+							</tr>
+							<tr>
+								<td>Zip Code:</td>
+								<td>{{existinguser.currentAddress.zipCode}}</td>
+							</tr>
+							<tr>
+								<td><b>Birth address</b></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Country:</td>
+								<td>{{existinguser.birthAddress.country}}</td>
+							</tr>
+							<tr>
+								<td>City:</td>
+								<td>{{existinguser.birthAddress.city}}</td>
+							</tr>
+							<tr>
+								<td>District:</td>
+								<td>{{existinguser.birthAddress.district}}</td>
+							</tr>
+							<tr>
+								<td>Street name:</td>
+								<td>{{existinguser.birthAddress.streetName}}</td>
+							</tr>
+							<tr>
+								<td>Street number:</td>
+								<td>{{existinguser.birthAddress.streetNo}}</td>
+							</tr>
+							<tr>
+								<td>Zip Code:</td>
+								<td>{{existinguser.birthAddress.zipCode}}</td>
+							</tr>
+							<tr>
+								<td><b>Contact</b></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Telephone 1:</td>
+								<td>{{existinguser.contactInfo.telephone1}}</td>
+							</tr>
+							<tr>
+								<td>Telephone 2:</td>
+								<td>{{existinguser.contactInfo.telephone2}}</td>
+							</tr>
+							<tr>
+								<td>E-mail 1:</td>
+								<td>{{existinguser.contactInfo.email1}}</td>
+							</tr>
+							<tr>
+								<td>E-mail 2:</td>
+								<td>{{existinguser.birthAddress.email2}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -10,10 +10,12 @@ angular.module('users')
 			console.log($scope.fileNames);
 		});
 	
+	
 	$scope.uploadFiles = function(files) {
     	//var id = $routeParams.id;
         $scope.files = files;
         angular.forEach(files, function(file) {
+
             if (file && !file.$error) {
          		file.upload = Upload.upload({
                   url: '/upload/'+id,
@@ -33,6 +35,8 @@ angular.module('users')
                   file.progress = Math.min(100, parseInt(100.0 * 
                                            evt.loaded / evt.total));
                 });
+                
+            	$scope.fileNames.push(file.name)
     		}   
         });
     }
