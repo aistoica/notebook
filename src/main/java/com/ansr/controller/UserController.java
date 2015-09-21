@@ -4,17 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,15 +45,25 @@ public class UserController {
 
 	// Create new user
 	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
-	public @ResponseBody String saveUser(@RequestBody User user) {
+	public ResponseEntity<String> saveUser(@RequestBody @Valid User user, BindingResult result) {
 
-		String response = "{\"message\":\"Post With ngResource: The user firstname: " + user.getFirstName()
-				+ ", lastname: " + user.getLastName() + "birth city" + user.getBirthAddress().getCity() + "\"}";
+		String responseBody;
+		HttpStatus status;
+		
+		
+		if (!result.hasErrors()) {
+			user.setRole(Role.USER);
+			userService.saveUser(user);
+			responseBody = "{\"successful\":\"true\"}";
+			status = HttpStatus.OK;
+			
+		} else {
+			//responseBody = "{\"successful\":\"false\",\"error\": {\"field\": " + result.getFieldError() + ", \"message\":" + result.getFieldError()+ "}}";
+			responseBody = "{\"successful\":\"false\",\"error\": \"" + result.getFieldError().getField() + " " +result.getFieldError().getDefaultMessage() + "\"}";
+			status = HttpStatus.BAD_REQUEST;
+		}
 
-		user.setRole(Role.USER);
-		userService.saveUser(user);
-
-		return response;
+		return ResponseEntity.status(status).body(responseBody);
 	}
 
 	// Get all users
@@ -192,7 +204,7 @@ public class UserController {
 		}
 
 		// encode the content as string base 64 to use data uri
-		String encodedContent = "data:image/"+contentType+";base64," + Base64.encodeBase64String(bytes);
+		String encodedContent = "data:image/" + contentType + ";base64," + Base64.encodeBase64String(bytes);
 
 		// set the content type: any type of image and the content length
 		headers.setContentType(MediaType.valueOf("image/xyz"));

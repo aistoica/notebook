@@ -1,6 +1,9 @@
 package com.ansr.dto;
 
-import org.springframework.data.annotation.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Created by astoica on 8/7/2015.
@@ -10,11 +13,23 @@ public class Address {
 /*    @Id
     private String id;*/
 
+	@NotEmpty
     private String streetName;
+	
+	@Min(1)
     private Long streetNo;
+    
+    @NotEmpty
     private String country;
+    
+    @NotEmpty
     private String city;
+    
+    @NotEmpty
     private String district;
+    
+    @NotEmpty
+    //@Pattern(regexp = "^[0-9]{6}$")
     private String zipCode;
 
     public Address() {}

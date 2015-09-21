@@ -1,13 +1,16 @@
 package com.ansr.dto;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Created by astoica on 8/7/2015.
@@ -17,22 +20,50 @@ public class User {
 	@Id
 	private String id;
 
+	@NotEmpty
 	private String firstName;
+	
+	@NotEmpty
 	private String lastName;
+	
+	@Valid
 	private Address currentAddress;
+	
+	@Valid
 	private Address birthAddress;
+	
+	@NotEmpty
 	private String idSeries;
+	
+	@NotEmpty
+	//@Pattern(regexp = "^\\d+$")
 	private String idNumber;
+	
+	@NotEmpty
+	//@Pattern(regexp = "^\\d+$")
+	@Size(min= 13, max=13)
 	private String idPersonalCode;
+	
+	@NotEmpty
 	private String nationality;
+	
+	@NotEmpty
 	// private MaritalStatus maritalStatus;
 	private String maritalStatus;
+	
+	@NotNull
+	@Min(0)
 	private int noOfChildren;
+	
+	@Valid
 	private Contact contactInfo;
+	
+	private Role role;
+	
+	private String photo;
+	
 	private Set<Payment> payments;
 	private Set<Disability> disabilities;
-	private Role role;
-	private String photo;
 
 	public User() {
 		payments = new HashSet<>();
