@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +33,6 @@ import com.ansr.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.gridfs.GridFSDBFile;
-
-import javax.validation.Valid;
 
 @Controller
 @ResponseBody
@@ -185,7 +186,7 @@ public class UserController extends BaseController {
 		}
 
 		// encode the content as string base 64 to use data uri
-		String encodedContent = "data:image/"+contentType+";base64," + Base64.encodeBase64String(bytes);
+		String encodedContent = "data:image/" + contentType + ";base64," + Base64.encodeBase64String(bytes);
 
 		// set the content type: any type of image and the content length
 		headers.setContentType(MediaType.valueOf("image/xyz"));

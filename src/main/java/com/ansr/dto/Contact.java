@@ -1,15 +1,27 @@
 package com.ansr.dto;
 
-import org.springframework.data.annotation.Id;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Contact {
 
 /*    @Id
     private String id;*/
     
+	@NotEmpty
+	//@Pattern(regexp = "^+[1-9]{1}[0-9]{3,14}$")
 	private String telephone1;
+	
+	//@Pattern(regexp = "^+[1-9]{1}[0-9]{3,14}$")
 	private String telephone2;
+	
+	@NotEmpty
+	@Email
 	private String email1;
+	
+	@Email
 	private String email2;
 	
 	public Contact() {}

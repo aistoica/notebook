@@ -3,6 +3,13 @@ package com.ansr.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -13,21 +20,47 @@ public class User {
 	@Id
 	private String id;
 
+	@NotEmpty
 	private String firstName;
+	
+	@NotEmpty
 	private String lastName;
+	
+	@Valid
 	private Address currentAddress;
+	
+	@Valid
 	private Address birthAddress;
+	
+	@NotEmpty
 	private String idSeries;
+	
+	@NotEmpty
+	//@Pattern(regexp = "^\\d+$")
 	private String idNumber;
+	
+	@NotEmpty
+	//@Pattern(regexp = "^\\d+$")
+	@Size(min= 13, max=13)
 	private String idPersonalCode;
+	
+	@NotEmpty
 	private String nationality;
-	// private MaritalStatus maritalStatus;
+	
+	@NotEmpty
 	private String maritalStatus;
+	
+	@NotNull
+	@Min(0)
 	private int noOfChildren;
+	
+	@Valid
 	private Contact contactInfo;
+
+	private String photo;
+	
 	private Set<Payment> payments;
 	private Set<Disability> disabilities;
-	private String photo;
 
 	public User() {
 		payments = new HashSet<>();
