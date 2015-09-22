@@ -1,13 +1,9 @@
 package com.ansr.dto;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Created by astoica on 8/7/2015.
@@ -31,7 +27,6 @@ public class User {
 	private Contact contactInfo;
 	private Set<Payment> payments;
 	private Set<Disability> disabilities;
-	private Role role;
 	private String photo;
 
 	public User() {
@@ -46,7 +41,7 @@ public class User {
 
 	public User(String firstName, String lastName, Address currentAddress, Address birthAddress, String idSeries,
 			String idNumber, String idPersonalCode, String nationality, String maritalStatus, int noOfChildren,
-			Contact contactInfo) { // , Role role) {
+			Contact contactInfo) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.currentAddress = currentAddress;
@@ -58,7 +53,6 @@ public class User {
 		this.maritalStatus = maritalStatus;
 		this.noOfChildren = noOfChildren;
 		this.contactInfo = contactInfo;
-		// this.role = role;
 	}
 
 	public Address getBirthAddress() {
@@ -117,10 +111,6 @@ public class User {
 		return payments;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
 	public void setBirthAddress(Address birthAddress) {
 		this.birthAddress = birthAddress;
 	}
@@ -175,10 +165,6 @@ public class User {
 
 	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
 	}
 
 	public String getPhoto() {

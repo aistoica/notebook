@@ -13,7 +13,7 @@ angular.module('users')
 			$scope.users.push($scope.newuser);
 		
 			//create resource
-			var User = $resource('/users/new');
+			var User = $resource('/users');
 			//call save
 			User.save($scope.newuser, function(response){
 				$scope.message = response.message;

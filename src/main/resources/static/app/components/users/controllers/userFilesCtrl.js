@@ -4,7 +4,7 @@ angular.module('users')
 	var id = $routeParams.id;
 	$scope.id = $routeParams.id;
 		
-	$http.get('/upload/'+id).
+	$http.get('/users/upload/'+id).
 		then(function(resp) {
 			$scope.fileNames = resp.data;
 			console.log($scope.fileNames);
@@ -18,7 +18,7 @@ angular.module('users')
 
             if (file && !file.$error) {
          		file.upload = Upload.upload({
-                  url: '/upload/'+id,
+                  url: '/users/upload/'+id,
                   file: file
                 });
 

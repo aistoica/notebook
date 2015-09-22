@@ -72,6 +72,7 @@ public class StorageService {
 
 	// deletes all files from a user
 	public void deleteAllFilesByUser(String userId) {
+
 		Query q = new Query();
 		q.addCriteria(Criteria.where("metadata.userId").is(userId));
 		gridOperations.delete(q);

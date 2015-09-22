@@ -11,7 +11,7 @@ angular.module('users')
 			if($scope.userForm.$invalid)
 				return
 				
-			$scope.existinguser.$save(function() {
+			$scope.existinguser.$update(function() {
 				$location.path('/users');
 			});
 		};

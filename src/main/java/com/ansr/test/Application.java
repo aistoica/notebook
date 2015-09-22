@@ -1,66 +1,40 @@
 package com.ansr.test;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
-
-import com.ansr.repository.UserRepository;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 /**
  * Created by astoica on 8/7/2015.
  */
 @SpringBootApplication
 @EnableMongoRepositories(basePackages = "com.ansr.repository")
-@ComponentScan(basePackages = "com.ansr")
-public class Application { // implements CommandLineRunner{
+@ComponentScan(basePackages = {"com.ansr"})
+public class Application {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Bean(autowire = Autowire.BY_TYPE)
+    public LocaleResolver localeResolver() {
+        AcceptHeaderLocaleResolver res = new AcceptHeaderLocaleResolver();
+        return res;
+    }
 
-    @Autowired
-    private UserServiceTest userService;
+    @Bean(autowire = Autowire.BY_TYPE)
+    public ReloadableResourceBundleMessageSource resourceBundle() {
+        ReloadableResourceBundleMessageSource resourceBundle = new ReloadableResourceBundleMessageSource();
+        resourceBundle.setBasename("classpath:locale/messages");
+        resourceBundle.setCacheSeconds(5);
+        resourceBundle.setDefaultEncoding("UTF-8");
 
-    
+        return resourceBundle;
+    }
+
     public static void main(String... args) {
         SpringApplication.run(Application.class, args);
     }
-
-/*    @Override
-    public void run(String... strings) throws Exception {
-
-        userService.print();
-
-        while(true);
-    }*/
-    
 }

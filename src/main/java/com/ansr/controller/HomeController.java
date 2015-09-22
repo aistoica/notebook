@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RestController
-public class HomeController {
+public class HomeController extends BaseController {
 	
 	// Match everything without a suffix (so not a static resource)
 	@RequestMapping(value = "/{[path:[^\\.]*}")

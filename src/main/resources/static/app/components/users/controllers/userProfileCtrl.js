@@ -12,7 +12,7 @@ $scope.existinguser = User.get({id:$routeParams.id}, function (data) {
 		$scope.picFile = 'assets/images/default_user.png';
 	}
 	else {
-	 	$http.get('/downloadPhoto/' + data.id + '/' + data.photo)
+	 	$http.get('/users/downloadPhoto/' + data.id + '/' + data.photo)
 		.then(function(resp) {
 			$scope.picFile = resp.data;
 		});
